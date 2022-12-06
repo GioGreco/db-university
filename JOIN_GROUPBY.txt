@@ -3,7 +3,7 @@
 --- QUERY 1 ---
 Tutti gli studenti iscritti al Corso di Laurea in Economia
 
-SELECT `students`.`name`, `students`.`surname`, `students`.`date_of_birth`, `students`.`enrolment_date`, `students`.`fiscal_code`, `students`.`email`, `degrees`.`name` 
+SELECT `students`.`name` AS 'student_name', `students`.`surname` AS 'student_surname', `students`.`date_of_birth`, `students`.`enrolment_date`, `students`.`fiscal_code`, `students`.`email`, `degrees`.`name` AS 'degreee_name'
 FROM `students` 
 JOIN `degrees` 
 ON `students`.`degree_id` = `degrees`.`id` 
@@ -78,7 +78,13 @@ ORDER BY `teachers`.`id`;
 BONUS: Selezionare per ogni studente quanti tentativi d’esame ha sostenuto per
 superare ciascuno dei suoi esami
 
-
+SELECT `student_id`, `students`.`name` AS 'student_name', `students`.`surname` AS 'student_surname',COUNT(*) AS 'total_attempts', `exams`.`course_id` 
+FROM `exam_student` 
+JOIN `students` 
+ON `students`.`id` = `exam_student`.`student_id` 
+JOIN `exams` 
+ON `exam_student`.`exam_id` = `exams`.`id` 
+GROUP BY `student_id`, `exams`.`course_id`;
 
 
 ****************** QUERY - GROUP BY ******************
